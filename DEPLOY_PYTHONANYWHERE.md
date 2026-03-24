@@ -17,12 +17,12 @@
 2. **Virtualenv erstellen und Pakete installieren**
    ```bash
    cd ~/coffee-shop-django
-   python3.11 -m venv venv
+   python3.10 -m venv venv   # oder einfach `python -m venv venv`
    source venv/bin/activate
    pip install --upgrade pip
    pip install -r requirements.txt
    ```
-   *Hinweis: PythonAnywhere nutzt Python 3.11 standardmäßig; passe ggf. an.*
+   *Hinweis: PythonAnywhere nutzt Python 3.10 standardmäßig.*
 
 3. **Migrieren und statische Dateien sammeln**
    ```bash
