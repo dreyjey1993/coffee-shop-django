@@ -1,0 +1,37 @@
+name: Deploy to PythonAnywhere
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via PythonAnywhere API
+        run: |
+          API_TOKEN="${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
+          USERNAME="dreyjey"
+          DOMAIN="${USERNAME}.pythonanywhere.com"
+          PROJECT_DIR="/home/${USERNAME}/coffee-shop-django"
+
+          curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
+            -H "Content-Type: application/json" \
+            -d "{\"command\": \"cd ${PROJECT_DIR} && git pull origin main\"}"
+
+          curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
+            -H "Content-Type: application/json" \
+            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && pip install -r requirements.txt\"}"
+
+          curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
+            -H "Content-Type: application/json" \
+            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && python manage.py migrate --noinput\"}"
+
+          curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
+            -H "Content-Type: application/json" \
+            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && python manage.py collectstatic --noinput\"}"
+
+          curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/reload/"
