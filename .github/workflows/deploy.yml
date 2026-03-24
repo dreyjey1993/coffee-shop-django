@@ -18,20 +18,25 @@ jobs:
           DOMAIN="${USERNAME}.pythonanywhere.com"
           PROJECT_DIR="/home/${USERNAME}/coffee-shop-django"
 
+          # Code updaten
           curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
             -H "Content-Type: application/json" \
             -d "{\"command\": \"cd ${PROJECT_DIR} && git pull origin main\"}"
 
+          # requirements installieren (systemweit)
           curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
             -H "Content-Type: application/json" \
-            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && pip install -r requirements.txt\"}"
+            -d "{\"command\": \"cd ${PROJECT_DIR} && pip install -r requirements.txt\"}"
 
+          # Migrationen
           curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
             -H "Content-Type: application/json" \
-            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && python manage.py migrate --noinput\"}"
+            -d "{\"command\": \"cd ${PROJECT_DIR} && python manage.py migrate --noinput\"}"
 
+          # Statische Dateien sammeln
           curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/execute/" \
             -H "Content-Type: application/json" \
-            -d "{\"command\": \"cd ${PROJECT_DIR} && source venv/bin/activate && python manage.py collectstatic --noinput\"}"
+            -d "{\"command\": \"cd ${PROJECT_DIR} && python manage.py collectstatic --noinput\"}"
 
+          # Web-App reload
           curl -s -X POST "https://${DOMAIN}/api/v0/user/${USERNAME}/api_token/${API_TOKEN}/reload/"
