@@ -1,18 +1,51 @@
 import os
-import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY: Keep secret key in env var for production
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-only')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-only-change-in-production')
 
-# DEBUG: false in production (PythonAnywhere sets DJANGO_SETTINGS_MODULE)
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Allowed hosts: PythonAnywhere domain
 ALLOWED_HOSTS = ['.pythonanywhere.com']
 
-# Database (SQLite on PythonAnywhere, can switch to Postgres later)
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'shop',
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'coffee_shop.urls'
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [],
+    'APP_DIRS': True,
+    'OPTIONS': {
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ],
+    },
+}]
+
+WSGI_APPLICATION = 'coffee_shop.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -20,10 +53,9 @@ DATABASES = {
     }
 }
 
-# Static files (collected to staticfiles dir)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Optional: Media files (if you upload images later)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Optional: wenn du später Medien-Uploads hast
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
