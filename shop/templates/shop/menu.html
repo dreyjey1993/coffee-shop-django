@@ -1,26 +1,30 @@
 {% extends "shop/base.html" %}
 {% block title %}Menü – Coffee Shop{% endblock %}
 {% block content %}
-<a class="back" href="/">← Zurück</a>
-<h1>Kaffee-Menü</h1>
+<a class="btn btn-outline-secondary btn-sm mb-3" href="/">← Zurück</a>
+<h1 class="mb-4" style="color: var(--coffee-brown);">Unsere Kaffee-Kreationen</h1>
 
-<div class="menu-item">
-    <h3>Espresso</h3>
-    <p>Kräftig, aromatisch – 2,50 €</p>
+{% if products %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            {% else %}
+            <img src="https://via.placeholder.com/400x200?text=Kein+Bild" class="card-img-top" alt="Kein Bild">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text text-muted small">{{ product.description|default:"–" }}</p>
+                <div class="mt-auto price fw-bold">{{ product.price }} €</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
+{% else %}
+<p class="text-muted">Noch keine Produkte im Menü. Füge welche im Admin-Panel hinzu.</p>
+{% endif %}
 
-<div class="menu-item">
-    <h3>Cappuccino</h3>
-    <p>Milchschaum, Zimt – 3,50 €</p>
-</div>
-
-<div class="menu-item">
-    <h3>Latte Macchiato</h3>
-    <p>Viel Milch, wenig Kaffee – 4,00 €</p>
-</div>
-
-<div class="menu-item">
-    <h3>Kalter Auszieher (Cold Brew)</h3>
-    <p>12 Stunden gezogen – 4,50 €</p>
-</div>
 {% endblock %}

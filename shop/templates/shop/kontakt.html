@@ -1,17 +1,33 @@
 {% extends "shop/base.html" %}
 {% block title %}Kontakt – Coffee Shop{% endblock %}
 {% block content %}
-<a class="back" href="/">← Zurück</a>
-<h1>Kontakt</h1>
-<div class="contact-info">
-    <p>Coffee Shop GmbH<br>
-    Musterstraße 1<br>
-    12345 Musterstadt</p>
-    <p>Tel: +49 123 456789<br>
-    E-Mail: <a class="mail" href="mailto:info@coffeeshop.example">info@coffeeshop.example</a></p>
-    <p>Öffnungszeiten:<br>
-    Mo–Fr: 07:00–19:00 Uhr<br>
-    Sa: 08:00–18:00 Uhr<br>
-    So: 09:00–17:00 Uhr</p>
+<a class="btn btn-outline-secondary btn-sm mb-3" href="/">← Zurück</a>
+<h1 class="mb-4" style="color: var(--coffee-brown);">Kontakt</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Adresse</h5>
+                <p class="card-text">
+                    Coffee Shop GmbH<br>
+                    Musterstraße 1<br>
+                    12345 Musterstadt
+                </p>
+                <h5 class="card-title mt-4">Kontakt</h5>
+                <p class="card-text">
+                    Tel: +49 123 456789<br>
+                    E-Mail: <a href="mailto:info@coffeeshop.example">info@coffeeshop.example</a>
+                </p>
+                <h5 class="card-title mt-4">Öffnungszeiten</h5>
+                <p class="card-text">
+                    Mo–Fr: 07:00–19:00 Uhr<br>
+                    Sa: 08:00–18:00 Uhr<br>
+                    So: 09:00–17:00 Uhr
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
