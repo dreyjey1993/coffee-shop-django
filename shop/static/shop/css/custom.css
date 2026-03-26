@@ -1,4 +1,4 @@
-/* Root-Variablen für Farben */
+/* Root-Variablen für Farben – Light Mode */
 :root {
   --bg-light: #faf7f2;
   --text-dark: #2d2a26;
@@ -9,6 +9,14 @@
   --header-height: 64px;
   --shadow: 0 4px 12px rgba(0,0,0,0.08);
   --radius: 12px;
+
+  /* Bootstrap CSS-Variablen überschreiben für konsistentes Theme */
+  --bs-body-color: var(--text-dark);
+  --bs-body-bg: var(--bg-light);
+  --bs-secondary-color: var(--text-muted);
+  --bs-primary: var(--accent);
+  --bs-primary-hover: var(--accent-hover);
+  --bs-card-bg: var(--card-bg);
 }
 
 /* Dark Mode */
@@ -20,6 +28,15 @@
   --accent-hover: #e2725b;
   --card-bg: #1c1a18;
   --shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+  /* Bootstrap Dark Overrides */
+  --bs-body-color: var(--text-dark);
+  --bs-body-bg: var(--bg-light);
+  --bs-secondary-color: var(--text-muted);
+  --bs-primary: var(--accent);
+  --bs-primary-hover: var(--accent-hover);
+  --bs-card-bg: var(--card-bg);
+  --bs-border-color: #3a3835;
 }
 
 body {
@@ -30,24 +47,33 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
+/* Hero mit besserem Kontrast im Dark Mode */
 .hero {
   min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(226, 114, 91, 0.92), rgba(141, 163, 153, 0.92)), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
+  text-align: center;
+  margin-bottom: 2rem;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(135deg, rgba(226,114,91,0.92), rgba(141,163,153,0.92)), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Parallax */
   color: #fff;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  margin-bottom: 2rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
   padding: 4rem 1rem;
+}
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, rgba(226,114,91,0.92), rgba(141,163,153,0.92)), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* Cards */
@@ -55,12 +81,15 @@ h1, h2, h3, h4, h5 {
   background: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  border: none;
+  border: 1px solid color-mix(in srgb, var(--bs-border-color), transparent 70%);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.card-body {
+  color: var(--text-dark);
 }
 
 /* Buttons */
@@ -80,6 +109,21 @@ h1, h2, h3, h4, h5 {
 .btn-outline-primary {
   border-radius: 30px;
   padding: 0.6rem 1.5rem;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.btn-outline-primary:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-success {
+  background: #25D366;
+  border-color: #25D366;
+  color: #fff;
+}
+.btn-success:hover {
+  background: #20bd5a;
+  border-color: #20bd5a;
 }
 
 /* Navigation */
@@ -87,7 +131,7 @@ h1, h2, h3, h4, h5 {
   position: sticky;
   top: 0;
   z-index: 1030;
-  background: rgba(255,255,255,0.85) !important;
+  background: rgba(250,247,242,0.85) !important; /* light mode */
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transition: background 0.3s ease;
@@ -95,9 +139,12 @@ h1, h2, h3, h4, h5 {
 [data-theme="dark"] .navbar {
   background: rgba(18,18,16,0.85) !important;
 }
-.nav-link {
-  position: relative;
+.navbar-brand, .nav-link {
+  color: var(--text-dark) !important;
   font-weight: 500;
+}
+.nav-link:hover {
+  color: var(--accent) !important;
 }
 .nav-link::after {
   content: '';
@@ -136,7 +183,7 @@ footer a:hover {
   -webkit-text-fill-color: transparent;
 }
 
-/* Mobile Offcanvas */
+/* Mobile Offcanvas (optional, falls genutzt) */
 .offcanvas {
   width: 280px;
 }
@@ -180,7 +227,7 @@ img.lazy.loaded {
   opacity: 1;
 }
 
-/* Lightbox (simple) */
+/* Lightbox */
 .lightbox {
   position: fixed;
   inset: 0;
