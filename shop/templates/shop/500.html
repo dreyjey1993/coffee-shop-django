@@ -1,0 +1,17 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}500 – Server-Fehler{% endblock %}
+{% block hero %}{% endblock %}
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-1 fw-bold text-muted">500</h1>
+    <h2 class="mb-4">Ups! Etwas ist schiefgelaufen.</h2>
+    <p class="lead text-muted mb-4">Auf unserer Seite ist ein technisches Problem aufgetreten. Wir arbeiten daran, es so schnell wie möglich zu beheben.</p>
+    <a class="btn btn-primary btn-lg" href="/">Zur Startseite</a>
+</div>
+{% endblock %}
+{% block extra_head %}
+<style>
+  .display-1 { font-size: 8rem; }
+</style>
+{% endblock %}

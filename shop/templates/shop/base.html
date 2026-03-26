@@ -4,8 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Coffee Shop – frisch gebrühter Kaffee, gemütliche Atmosphäre, Events, Galerie und mehr.">
-    <title>{% block title %}Coffee Shop{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Coffee Shop – frisch gebrähter Kaffee, gemütliche Atmosphäre, Events, Galerie und mehr.{% endblock %}">
+    <meta name="keywords" content="Coffee Shop, Kaffee, Café, Bäckerei, Events, Galerie, Blog, Reservierung">
+    <meta name="author" content="Coffee Shop GmbH">
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}{% if title %}{{ title }}{% else %}Coffee Shop{% endif %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Frisch gebrähter Kaffee & gemütliche Atmosphäre.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{% static 'shop/img/og-image.jpg' %}{% endblock %}">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{% if title %}{{ title }}{% else %}Coffee Shop{% endif %}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Frisch gebrähter Kaffee & gemütliche Atmosphäre.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% static 'shop/img/og-image.jpg' %}{% endblock %}">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {% block structured_data %}{
+      "@context": "https://schema.org",
+      "@type": "CafeOrCoffeeShop",
+      "name": "Coffee Shop",
+      "image": "{% static 'shop/img/og-image.jpg' %}",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Musterstraße 1",
+        "addressLocality": "Musterstadt",
+        "postalCode": "12345",
+        "addressCountry": "DE"
+      },
+      "telephone": "+49 123 456789",
+      "openingHours": [
+        "Mo-Fr 07:00-19:00",
+        "Sa 08:00-18:00",
+        "Su 09:00-17:00"
+      ]
+    }{% endblock %}
+    </script>
+    <!-- Preconnect für Fonts & CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{% static 'shop/manifest.json' %}">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'shop/img/favicon.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'shop/img/apple-touch-icon.png' %}">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Bootstrap + Icons -->
@@ -14,16 +58,32 @@
     <!-- Custom CSS -->
     <link href="{% static 'shop/css/custom.css' %}" rel="stylesheet">
     {% block extra_head %}{% endblock %}
+    <style>
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            z-index: 2000;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+    </style>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link visually-hidden-focusable">Zum Inhalt springen</a>
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top" aria-label="Hauptnavigation">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">☕ Coffee Shop</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation umschalten">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav" aria-label="Hauptmenü">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Start</a></li>
                     <li class="nav-item"><a class="nav-link" href="/menu/">Menü</a></li>
@@ -35,13 +95,13 @@
                     <li class="nav-item"><a class="nav-link" href="/reservation/">Reservierung</a></li>
                 </ul>
                 <div class="d-flex align-items-center gap-2">
-                    <button id="themeToggle" class="btn btn-link text-secondary" aria-label="Theme wechseln">
+                    <button id="themeToggle" class="btn btn-link text-secondary" aria-label="Erscheinungsmodus wechseln">
                         <i class="bi bi-moon-fill"></i>
                     </button>
-                    <a class="btn btn-primary ms-2" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20etwas%20bestellen." target="_blank">
+                    <a class="btn btn-primary ms-2" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20etwas%20bestellen." target="_blank" aria-label="Über WhatsApp bestellen">
                         <i class="bi bi-whatsapp me-1"></i> Bestellen
                     </a>
-                    <a class="btn btn-outline-secondary" href="/admin/" title="Admin">
+                    <a class="btn btn-outline-secondary" href="/admin/" title="Admin" aria-label="Adminbereich">
                         <i class="bi bi-gear"></i>
                     </a>
                 </div>
@@ -52,12 +112,12 @@
     <!-- Hero Section (auf Home überschreibbar) -->
     {% block hero %}{% endblock %}
 
-    <main class="container mt-4 pt-5">
+    <main id="main-content" class="container mt-4 pt-5">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="mt-auto">
+    <footer class="mt-auto" role="contentinfo">
         <div class="container">
             <div class="row py-5">
                 <div class="col-md-4 mb-4">
@@ -68,8 +128,8 @@
                         Deutschland
                     </address>
                     <p class="mt-2">
-                        <i class="bi bi-phone me-2"></i>+49 123 456789<br>
-                        <i class="bi bi-envelope me-2"></i><a href="mailto:info@coffeeshop.de">info@coffeeshop.de</a>
+                        <i class="bi bi-telephone me-2" aria-hidden="true"></i>+49 123 456789<br>
+                        <i class="bi bi-envelope me-2" aria-hidden="true"></i><a href="mailto:info@coffeeshop.de">info@coffeeshop.de</a>
                     </p>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -83,9 +143,9 @@
                 <div class="col-md-4 mb-4">
                     <h5 class="mb-3">Folge uns</h5>
                     <div class="d-flex gap-3 fs-4">
-                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a>
                     </div>
                     <h5 class="mt-4 mb-3">Newsletter</h5>
                     <form class="d-flex flex-column" onsubmit="event.preventDefault(); alert('Danke für die Anmeldung!');">
@@ -101,19 +161,24 @@
     </footer>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+    <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true" aria-modal="true" aria-label="Bild vergrößern">
         <span class="lightbox-close" aria-label="Schließen">&times;</span>
         <img src="" alt="Vergrößerte Ansicht">
     </div>
 
     <!-- WhatsApp Float -->
     <a id="whatsapp-order" class="whatsapp-float" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20etwas%20bestellen." target="_blank" aria-label="Über WhatsApp bestellen">
-        <i class="bi bi-whatsapp"></i>
+        <i class="bi bi-whatsapp" aria-hidden="true"></i>
     </a>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'shop/js/main.js' %}"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('{% static "shop/sw.js" %}').catch(console.error);
+      }
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

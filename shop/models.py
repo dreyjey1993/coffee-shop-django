@@ -64,3 +64,16 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"{self.name} – {self.date} {self.time} ({self.guests} Pers.)"
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Name")
+    email = models.EmailField(verbose_name="E-Mail")
+    subject = models.CharField(max_length=200, verbose_name="Betreff")
+    message = models.TextField(verbose_name="Nachricht")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.subject} von {self.name} ({self.created_at})}"

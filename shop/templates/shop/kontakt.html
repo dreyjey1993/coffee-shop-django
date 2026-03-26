@@ -5,7 +5,7 @@
 <h1 class="mb-4">Kontakt</h1>
 <div class="row g-4">
     <div class="col-lg-6">
-        <div class="card h-100">
+        <div class="card h-100 mb-4">
             <div class="card-body">
                 <h5 class="card-title">Adresse</h5>
                 <p class="card-text">
@@ -27,11 +27,65 @@
                 </ul>
             </div>
         </div>
+
+        <!-- Kontaktformular -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Nachricht senden</h5>
+                {% if success %}
+                <div class="alert alert-success" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>Danke für deine Nachricht! Wir melden uns schnellstmöglich.
+                </div>
+                {% else %}
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="invalid-feedback">Bitte gib deinen Namen ein.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-Mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="invalid-feedback">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Betreff</label>
+                        <input type="text" class="form-control" id="subject" name="subject" required>
+                        <div class="invalid-feedback">Bitte gib einen Betreff ein.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Nachricht</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        <div class="invalid-feedback">Bitte gib eine Nachricht ein.</div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Absenden</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="col-lg-6">
-        <div class="ratio ratio-16x9 rounded-3 shadow-sm">
+        <div class="ratio ratio-16x9 rounded-3 shadow-sm h-100">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.123456789!2d13.123456!3d52.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNjPCsDQ3JzU0LjQiTiAxM8KwNTQnMzQuNCJF!5e0!3m2!1sde!2sde!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 </div>
+
+<script>
+// Bootstrap-Validierung
+(() => {
+  'use strict';
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', e => {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>
 {% endblock %}

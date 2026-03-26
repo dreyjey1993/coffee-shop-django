@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Event, Article, GalleryImage, Reservation
+from .models import Product, Event, Article, GalleryImage, Reservation, ContactMessage
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -62,3 +62,11 @@ class ReservationAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email')
     list_filter = ('date', 'guests')
     fields = ('name', 'email', 'date', 'time', 'guests')
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('subject', 'name', 'email', 'created_at')
+    search_fields = ('subject', 'name', 'email', 'message')
+    list_filter = ('created_at',)
+    fields = ('name', 'email', 'subject', 'message', 'created_at')
+    readonly_fields = ('created_at',)
