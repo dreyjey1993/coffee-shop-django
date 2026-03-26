@@ -21,22 +21,24 @@ def menu(request):
     return render(request, 'shop/menu.html', {'products': products})
 
 def kontakt(request):
+    from .forms import ContactForm
     success = False
     error = None
     if request.method == 'POST':
-        # Honeypot check
-        if request.POST.get('website'):
-            # Bot erkannt, ignoriere
-            error = "Spam erkannt. Bitte versuche es erneut."
-        else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
             ContactMessage.objects.create(
-                name=request.POST.get('name'),
-                email=request.POST.get('email'),
-                subject=request.POST.get('subject'),
-                message=request.POST.get('message')
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message']
             )
             success = True
-    return render(request, 'shop/kontakt.html', {'success': success, 'error': error})
+        else:
+            error = "Bitte korrigiere die Fehler im Formular."
+    else:
+        form = ContactForm()
+    return render(request, 'shop/kontakt.html', {'form': form, 'success': success, 'error': error})
 
 def about(request):
     team = [

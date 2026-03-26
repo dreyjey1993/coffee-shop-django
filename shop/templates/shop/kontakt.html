@@ -1,4 +1,5 @@
 {% extends "shop/base.html" %}
+{% load static captcha %}
 {% block title %}Kontakt – Coffee Shop{% endblock %}
 
 {% block extra_head %}
@@ -38,7 +39,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title mb-3">Nachricht senden</h5>
-                {% if error %}
+                {% if error and not success %}
                 <div class="alert alert-danger" role="alert">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
                 </div>
@@ -57,24 +58,38 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                        <div class="invalid-feedback">Bitte gib deinen Namen ein.</div>
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                        <div class="invalid-feedback d-block">{{ form.name.errors }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">E-Mail</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                        <div class="invalid-feedback">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="invalid-feedback d-block">{{ form.email.errors }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
-                        <label for="subject" class="form-label">Betreff</label>
-                        <input type="text" class="form-control" id="subject" name="subject" required>
-                        <div class="invalid-feedback">Bitte gib einen Betreff ein.</div>
+                        {{ form.subject.label_tag }}
+                        {{ form.subject }}
+                        {% if form.subject.errors %}
+                        <div class="invalid-feedback d-block">{{ form.subject.errors }}</div>
+                        {% endif %}
                     </div>
                     <div class="mb-3">
-                        <label for="message" class="form-label">Nachricht</label>
-                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                        <div class="invalid-feedback">Bitte gib eine Nachricht ein.</div>
+                        {{ form.message.label_tag }}
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                        <div class="invalid-feedback d-block">{{ form.message.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.captcha }}
+                        {% if form.captcha.errors %}
+                        <div class="alert alert-danger">{{ form.captcha.errors }}</div>
+                        {% endif %}
                     </div>
                     <button class="btn btn-primary" type="submit">Absenden</button>
                 </form>
@@ -88,21 +103,4 @@
         </div>
     </div>
 </div>
-
-<script>
-// Bootstrap-Validierung
-(() => {
-  'use strict';
-  const forms = document.querySelectorAll('.needs-validation');
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', e => {
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      form.classList.add('was-validated');
-    }, false);
-  });
-})();
-</script>
 {% endblock %}

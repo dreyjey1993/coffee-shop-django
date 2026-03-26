@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    'captcha',
 ]
 
 # Middleware
@@ -101,3 +102,14 @@ else:
 
 # Login URL für Admin (optional)
 LOGIN_URL = '/admin/login/'
+
+# reCAPTCHA
+if not DEBUG:
+    RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY', '')
+    RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY', '')
+    RECAPTCHA_REQUIRED_SCORE = 0.85
+else:
+    # Local development: disable recaptcha or use test keys
+    RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI')
+    RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe')
+    RECAPTCHA_TESTING = True
