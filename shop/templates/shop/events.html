@@ -2,28 +2,48 @@
 {% block title %}Events – Coffee Shop{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Kommende Events</h1>
-{% if events %}
-<div class="row g-4">
-    {% for event in events %}
-    <div class="col-md-6 reveal">
-        <div class="card h-100">
-            {% if event.image %}
-            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}" loading="lazy">
-            {% else %}
-            <img src="https://via.placeholder.com/600x300?text=Kein+Bild" class="card-img-top" alt="Kein Bild" loading="lazy">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ event.title }}</h5>
-                <p class="text-muted small mb-1"><i class="bi bi-calendar-event me-1"></i>{{ event.date|date:"d.m.Y H:i" }}</p>
-                <p class="text-muted small mb-2"><i class="bi bi-geo-alt me-1"></i>{{ event.location }}</p>
-                <p class="card-text">{{ event.description }}</p>
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Kommende Events</h1>
+    {% if events %}
+    <div class="row justify-content-center">
+        {% for event in events %}
+        <div class="col-lg-8 mb-4 reveal">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4 position-relative">
+                        {% if event.image %}
+                        <img src="{{ event.image.url }}" class="img-fluid h-100 w-100 object-fit-cover" alt="{{ event.title }}" loading="lazy" style="min-height: 200px;">
+                        {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center h-100" style="min-height: 200px;">
+                            <span class="text-muted">Kein Bild</span>
+                        </div>
+                        {% endif %}
+                        <div class="position-absolute top-50 start-50 translate-middle badge bg-primary rounded-pill px-3 py-2">
+                            <i class="bi bi-calendar-event me-1"></i>{{ event.date|date:"d. M" }}
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body h-100 d-flex flex-column">
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <p class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i>{{ event.location }}</p>
+                            <p class="text-muted small mb-2">{{ event.date|date:"H:i" }} Uhr</p>
+                            <p class="card-text flex-grow-1">{{ event.description|truncatewords:60 }}</p>
+                            <a class="btn btn-outline-primary btn-sm mt-2 align-self-start" href="#">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    {% else %}
+    <p class="text-muted text-center">Momentan stehen keine Events an. Schau später wieder vorbei!</p>
+    {% endif %}
 </div>
-{% else %}
-<p class="text-muted">Momentan stehen keine Events an. Schau später wieder vorbei!</p>
-{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.object-fit-cover { object-fit: cover; }
+</style>
 {% endblock %}
