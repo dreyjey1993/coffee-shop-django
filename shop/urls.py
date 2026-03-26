@@ -14,4 +14,5 @@ urlpatterns = [
     path('health/', views.health_check, name='health_check'),
     path('sitemap.xml', views.sitemap, name='sitemap'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('feed/rss/', views.feed_rss, name='feed_rss'),
 ]

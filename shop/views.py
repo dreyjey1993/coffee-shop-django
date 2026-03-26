@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerEr
 from django.utils import timezone
 from django.db import connection
 from django.urls import reverse
+from django.contrib.syndication.views import Feed
 from .models import Product, Event, Article, GalleryImage, Reservation, ContactMessage
 
 def home(request):
@@ -129,6 +130,32 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'shop/500.html', status=500)
+
+# RSS Feed
+class BlogFeed(Feed):
+    title = "Coffee Shop Blog"
+    link = "/blog/"
+    description = "Neueste Artikel und Neuigkeiten vom Coffee Shop"
+    language = "de"
+
+    def items(self):
+        return Article.objects.filter(published_date__lte=timezone.now())[:10]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.content
+
+    def item_pubdate(self, item):
+        return item.published_date
+
+    def item_link(self, item):
+        return reverse('article_detail', args=[item.slug])
+
+def feed_rss(request):
+    feed = BlogFeed()
+    return feed(request)
 
 def health_check(request):
     try:
