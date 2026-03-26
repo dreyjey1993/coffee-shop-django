@@ -1,8 +1,13 @@
 // Dark Mode Toggle
 function initTheme() {
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  updateThemeButton(saved);
+  const saved = localStorage.getItem('theme');
+  let theme = saved;
+  if (!theme) {
+    // System preference detection
+    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeButton(theme);
 }
 function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme') || 'light';
