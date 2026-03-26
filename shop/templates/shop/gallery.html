@@ -2,18 +2,63 @@
 {% block title %}Galerie – Coffee Shop{% endblock %}
 
 {% block content %}
-<h1 class="mb-4 text-center">Galerie</h1>
-{% if images %}
-<div class="row g-3">
-    {% for img in images %}
-    <div class="col-6 col-md-4 col-lg-3 reveal">
-        <div class="gallery-item border-0 rounded-3 overflow-hidden" data-full="{{ img.image.url }}">
-            <img src="{{ img.image.url }}" class="img-fluid w-100" alt="{{ img.caption|default:'Bild' }}" loading="lazy">
-        </div>
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Galerie</h1>
+    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+        <button class="btn btn-outline-primary active" data-filter="all">Alle</button>
+        <button class="btn btn-outline-secondary" data-filter="interior">Innenraum</button>
+        <button class="btn btn-outline-secondary" data-filter="coffee">Kaffee</button>
+        <button class="btn btn-outline-secondary" data-filter="team">Team</button>
     </div>
-    {% endfor %}
+
+    {% if images %}
+    <div class="masonry-grid row g-3" id="gallery-grid">
+        {% for img in images %}
+        {% with forloop.counter as idx %}
+        <div class="col-6 col-md-4 col-lg-3 reveal gallery-item" data-category="{% cycle 'interior' 'coffee' 'team' 'interior' 'coffee' %}">
+            <div class="ratio-1 ratio border rounded-3 overflow-hidden" style="cursor: zoom-in;">
+                <img src="{{ img.image.url }}" class="img-fluid w-100 h-100 object-fit-cover" alt="{{ img.caption|default:'Bild' }}" loading="lazy" data-full="{{ img.image.url }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted text-center">Die Galerie wird gerade befüllt. Schau später wieder vorbei!</p>
+    {% endif %}
 </div>
-{% else %}
-<p class="text-muted text-center">Die Galerie wird gerade befüllt. Schau später wieder vorbei!</p>
-{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.masonry-grid .col-6 { break-inside: avoid; margin-bottom: 1rem; }
+.ratio-1 { aspect-ratio: 1 / 1; }
+.object-fit-cover { object-fit: cover; }
+.gallery-item.hidden { display: none; }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('[data-filter]');
+  const items = document.querySelectorAll('.gallery-item');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'), b.classList.add('btn-outline-secondary'), b.classList.remove('btn-primary'));
+      btn.classList.add('active');
+      btn.classList.remove('btn-outline-secondary');
+      btn.classList.add('btn-primary');
+      const filter = btn.dataset.filter;
+      items.forEach(item => {
+        const cat = item.dataset.category;
+        if (filter === 'all' || cat === filter) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+});
+</script>
 {% endblock %}

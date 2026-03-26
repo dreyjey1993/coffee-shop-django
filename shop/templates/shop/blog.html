@@ -2,28 +2,39 @@
 {% block title %}Blog – Coffee Shop{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Blog</h1>
-{% if articles %}
-<div class="row g-4">
-    {% for article in articles %}
-    <div class="col-md-6 col-lg-4 reveal">
-        <div class="card h-100">
-            {% if article.image %}
-            <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" loading="lazy">
-            {% else %}
-            <img src="https://via.placeholder.com/400x200?text=Kein+Bild" class="card-img-top" alt="Kein Bild" loading="lazy">
-            {% endif %}
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <p class="text-muted small mb-2">{{ article.published_date|date:"d.m.Y" }}</p>
-                <p class="card-text small">{{ article.content|striptags|truncatewords:30 }}</p>
-                <a href="{% url 'article_detail' slug=article.slug %}" class="btn btn-link p-0 mt-auto">Weiterlesen →</a>
-            </div>
+<div class="max-w-4ch mx-auto">
+    <h1 class="mb-4">Blog</h1>
+    {% if articles %}
+    <div class="row g-4">
+        {% for article in articles %}
+        <div class="col-md-6 col-lg-4 reveal">
+            <article class="card h-100">
+                {% if article.image %}
+                <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" loading="lazy" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <span class="text-muted">Kein Bild</span>
+                </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="text-muted small mb-2">{{ article.published_date|date:"d.m.Y" }}</p>
+                    <p class="card-text small lh-sm">{{ article.content|striptags|truncatewords:35 }}</p>
+                    <a href="{% url 'article_detail' slug=article.slug %}" class="btn btn-link p-0 mt-auto">Weiterlesen →</a>
+                </div>
+            </article>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    {% else %}
+    <p class="text-muted text-center">Noch keine Blog-Artikel vorhanden.</p>
+    {% endif %}
 </div>
-{% else %}
-<p class="text-muted">Noch keine Blog-Artikel vorhanden.</p>
-{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.max-w-4ch { max-width: 65ch; margin-left: auto; margin-right: auto; }
+.lh-sm { line-height: 1.6; }
+</style>
 {% endblock %}

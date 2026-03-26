@@ -3,15 +3,34 @@
 {% block title %}{{ article.title }} – Coffee Shop Blog{% endblock %}
 
 {% block content %}
-<article class="mt-4 reveal">
-    <h1 class="mb-3">{{ article.title }}</h1>
-    <p class="text-muted small mb-4">Veröffentlicht am {{ article.published_date|date:"d.m.Y" }}</p>
-    {% if article.image %}
-    <img src="{{ article.image.url }}" class="img-fluid rounded-3 mb-4" alt="{{ article.title }}" loading="lazy">
-    {% endif %}
-    <div class="article-content">
-        {{ article.content|linebreaks }}
-    </div>
-    <a class="btn btn-outline-secondary mt-4" href="{% url 'blog' %}">← Zurück zum Blog</a>
-</article>
+<div class="max-w-4ch mx-auto mt-4">
+    <article class="reveal">
+        <header class="mb-4 pb-3 border-bottom">
+            <h1 class="display-5 fw-bold mb-2">{{ article.title }}</h1>
+            <p class="text-muted small">Veröffentlicht am {{ article.published_date|date:"d.m.Y" }}</p>
+        </header>
+        {% if article.image %}
+        <figure class="mb-4">
+            <img src="{{ article.image.url }}" class="img-fluid rounded-3" alt="{{ article.title }}" loading="lazy">
+        </figure>
+        {% endif %}
+        <div class="article-content lh-lg fs-5">
+            {{ article.content|safe }}
+        </div>
+        <footer class="mt-5 pt-3 border-top">
+            <a class="btn btn-outline-secondary" href="{% url 'blog' %}">← Zurück zum Blog</a>
+        </footer>
+    </article>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.max-w-4ch { max-width: 65ch; margin-left: auto; margin-right: auto; }
+.lh-lg { line-height: 1.75; }
+.fs-5 { font-size: 1.125rem; }
+.article-content p { margin-bottom: 1.25rem; }
+.article-content h2 { margin-top: 2rem; margin-bottom: 1rem; font-size: 1.75rem; }
+.article-content ul, .article-content ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+</style>
 {% endblock %}
