@@ -63,9 +63,11 @@ Eine vollständige, moderne Coffee-Shop-Webseite mit Django 5.
 ## Anpassungen
 
 - Inhalte im Admin eingeben: Produkte, Events, Blog-Artikel, Galerie-Bilder.
+- Oder Beispieldaten laden: `python manage.py loaddata shop/fixtures/initial_data.json`
 - Farben/Styles in `shop/static/shop/css/custom.css` anpassen.
 - Texte in Templates bearbeiten.
 - WhatsApp-Nummer in `base.html` und `menu.html` anpassen (`49123456789`).
+- Favicon und Apple Touch Icon unter `shop/static/shop/img/` ablegen und in `base.html` referenzieren.
 
 ## Lizenz
 
