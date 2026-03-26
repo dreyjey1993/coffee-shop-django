@@ -1,0 +1,117 @@
+[
+  {
+    "model": "shop.product",
+    "pk": 1,
+    "fields": {
+      "name": "Espresso",
+      "description": "Kräftiger, aromatischer Espresso aus 100% Arabica-Bohnen.",
+      "price": "2.50",
+      "image": "",
+      "order": 1
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 2,
+    "fields": {
+      "name": "Cappuccino",
+      "description": "Klassischer Cappuccino mit Milchschaum und einer Prise Kakao.",
+      "price": "3.50",
+      "image": "",
+      "order": 2
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 3,
+    "fields": {
+      "name": "Latte Macchiato",
+      "description": "Milchkaffee mit viel Milchschaum und einem Schuss Espresso.",
+      "price": "4.00",
+      "image": "",
+      "order": 3
+    }
+  },
+  {
+    "model": "shop.product",
+    "pk": 4,
+    "fields": {
+      "name": "Kakao",
+      "description": "Heiße Schokolade mit Sahne.",
+      "price": "3.00",
+      "image": "",
+      "order": 4
+    }
+  },
+  {
+    "model": "shop.event",
+    "pk": 1,
+    "fields": {
+      "title": "Live-Musik Abend",
+      "description": "Reggae, Soul und Funk mit lokalen Künstlern. Genieße die Atmosphäre bei guter Musik und leckeren Kaffee-Spezialitäten.",
+      "date": "2026-04-15T19:00:00Z",
+      "location": "Coffee Shop, Musterstadt",
+      "image": ""
+    }
+  },
+  {
+    "model": "shop.event",
+    "pk": 2,
+    "fields": {
+      "title": "Kaffee-Verkostung",
+      "description": "Probiere verschiedene Sorten aus unserer Bohnen-Rotation und lerne mehr über Anbau und Röstung.",
+      "date": "2026-04-22T15:00:00Z",
+      "location": "Coffee Shop, Musterstadt",
+      "image": ""
+    }
+  },
+  {
+    "model": "shop.article",
+    "pk": 1,
+    "fields": {
+      "title": "Die perfekte Espresso-Zubereitung",
+      "slug": "die-perfekte-espresso-zubereitung",
+      "content": "<p>Ein guter Espresso ist die Basis für viele Kaffeegetränke. In diesem Artikel zeigen wir dir, wie du den perfekten Espresso zu Hause zubereitest.</p><p>Wichtige Faktoren sind:</p><ul><li>Frische Bohnen</li><li>Korrekte Mahlung</li><li>Temperaturen und Druck</li><li>Ziehzeit von ca. 25-30 Sekunden</li></ul><p>Viel Erfolg und Genuss!</p>",
+      "published_date": "2026-03-20T10:00:00Z",
+      "image": ""
+    }
+  },
+  {
+    "model": "shop.article",
+    "pk": 2,
+    "fields": {
+      "title": "Nachhaltiger Kaffeeanbau: Was du wissen solltest",
+      "slug": "nachhaltiger-kaffeeanbau-was-du-wissen-solltest",
+      "content": "<p>Kaffee ist eines der beliebtesten Getränke weltweit. Doch der Anbau kann ökologische und soziale Herausforderungen mit sich bringen. Erfahre, wie Zertifikate wie Bio, Fairtrade und Rainforest Alliance helfen, und was du als Konsument tun kannst.</p>",
+      "published_date": "2026-03-25T14:30:00Z",
+      "image": ""
+    }
+  },
+  {
+    "model": "shop.galleryimage",
+    "pk": 1,
+    "fields": {
+      "caption": "Unser gemütlicher Innenraum",
+      "image": "",
+      "uploaded_at": "2026-03-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "shop.galleryimage",
+    "pk": 2,
+    "fields": {
+      "caption": "Barista bei der Arbeit",
+      "image": "",
+      "uploaded_at": "2026-03-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "shop.galleryimage",
+    "pk": 3,
+    "fields": {
+      "caption": "Unser neuer Latte-Art",
+      "image": "",
+      "uploaded_at": "2026-03-22T15:30:00Z"
+    }
+  }
+]

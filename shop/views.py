@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, JsonResponse
 from django.utils import timezone
+from django.db import connection
 from django.urls import reverse
 from .models import Product, Event, Article, GalleryImage, Reservation, ContactMessage
 
@@ -20,15 +21,21 @@ def menu(request):
 
 def kontakt(request):
     success = False
+    error = None
     if request.method == 'POST':
-        ContactMessage.objects.create(
-            name=request.POST.get('name'),
-            email=request.POST.get('email'),
-            subject=request.POST.get('subject'),
-            message=request.POST.get('message')
-        )
-        success = True
-    return render(request, 'shop/kontakt.html', {'success': success})
+        # Honeypot check
+        if request.POST.get('website'):
+            # Bot erkannt, ignoriere
+            error = "Spam erkannt. Bitte versuche es erneut."
+        else:
+            ContactMessage.objects.create(
+                name=request.POST.get('name'),
+                email=request.POST.get('email'),
+                subject=request.POST.get('subject'),
+                message=request.POST.get('message')
+            )
+            success = True
+    return render(request, 'shop/kontakt.html', {'success': success, 'error': error})
 
 def about(request):
     team = [
@@ -56,16 +63,20 @@ def article_detail(request, slug):
 
 def reservation(request):
     success = False
+    error = None
     if request.method == 'POST':
-        Reservation.objects.create(
-            name=request.POST.get('name'),
-            email=request.POST.get('email'),
-            date=request.POST.get('date'),
-            time=request.POST.get('time'),
-            guests=int(request.POST.get('guests', 2))
-        )
-        success = True
-    return render(request, 'shop/reservation.html', {'success': success})
+        if request.POST.get('website'):
+            error = "Spam erkannt. Bitte versuche es erneut."
+        else:
+            Reservation.objects.create(
+                name=request.POST.get('name'),
+                email=request.POST.get('email'),
+                date=request.POST.get('date'),
+                time=request.POST.get('time'),
+                guests=int(request.POST.get('guests', 2))
+            )
+            success = True
+    return render(request, 'shop/reservation.html', {'success': success, 'error': error})
 
 def sitemap(request):
     base_url = request.build_absolute_uri('/')[:-1]
@@ -118,3 +129,18 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'shop/500.html', status=500)
+
+def health_check(request):
+    try:
+        # Prüfe DB-Verbindung
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            db_ok = True
+    except Exception:
+        db_ok = False
+    status = 200 if db_ok else 503
+    return JsonResponse({
+        'status': 'healthy' if db_ok else 'unhealthy',
+        'database': 'ok' if db_ok else 'error',
+        'timestamp': timezone.now().isoformat()
+    }, status=status)

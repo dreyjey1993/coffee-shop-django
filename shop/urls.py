@@ -11,6 +11,7 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('blog/<slug:slug>/', views.article_detail, name='article_detail'),
     path('reservation/', views.reservation, name='reservation'),
+    path('health/', views.health_check, name='health_check'),
     path('sitemap.xml', views.sitemap, name='sitemap'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
 ]
