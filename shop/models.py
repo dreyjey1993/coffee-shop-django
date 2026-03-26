@@ -76,4 +76,4 @@ class ContactMessage(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.subject} von {self.name} ({self.created_at})}"
+        return f"{self.subject} von {self.name} ({self.created_at})"
