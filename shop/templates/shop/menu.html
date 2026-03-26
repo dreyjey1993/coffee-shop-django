@@ -1,30 +1,35 @@
 {% extends "shop/base.html" %}
 {% block title %}Menü – Coffee Shop{% endblock %}
+
 {% block content %}
-<a class="btn btn-outline-secondary btn-sm mb-3" href="/">← Zurück</a>
-<h1 class="mb-4" style="color: var(--coffee-brown);">Unsere Kaffee-Kreationen</h1>
+<div class="mb-3">
+    <a class="btn btn-outline-secondary btn-sm" href="/">← Zurück</a>
+</div>
+<h1 class="mb-4">Unsere Kaffee-Kreationen</h1>
 
 {% if products %}
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for product in products %}
-    <div class="col">
-        <div class="card h-100 shadow-sm">
+    <div class="col reveal">
+        <div class="card h-100">
             {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" loading="lazy">
             {% else %}
-            <img src="https://via.placeholder.com/400x200?text=Kein+Bild" class="card-img-top" alt="Kein Bild">
+            <img src="https://via.placeholder.com/400x200?text=Kein+Bild" class="card-img-top" alt="Kein Bild" loading="lazy">
             {% endif %}
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text text-muted small">{{ product.description|default:"–" }}</p>
                 <div class="mt-auto price fw-bold">{{ product.price }} €</div>
+                <a class="btn btn-success btn-sm mt-2" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20{{ product.name|urlencode }}%20zu%20{{ product.price }}%20EUR%20bestellen." target="_blank">
+                    <i class="bi bi-whatsapp me-1"></i>Über WhatsApp bestellen
+                </a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
 {% else %}
-<p class="text-muted">Noch keine Produkte im Menü. Füge welche im Admin-Panel hinzu.</p>
+<p class="text-muted text-center">Noch keine Produkte im Menü. Füge welche im Admin-Panel hinzu.</p>
 {% endif %}
-
 {% endblock %}

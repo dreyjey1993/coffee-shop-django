@@ -1,0 +1,19 @@
+{% extends "shop/base.html" %}
+{% block title %}Galerie – Coffee Shop{% endblock %}
+
+{% block content %}
+<h1 class="mb-4 text-center">Galerie</h1>
+{% if images %}
+<div class="row g-3">
+    {% for img in images %}
+    <div class="col-6 col-md-4 col-lg-3 reveal">
+        <div class="gallery-item border-0 rounded-3 overflow-hidden" data-full="{{ img.image.url }}">
+            <img src="{{ img.image.url }}" class="img-fluid w-100" alt="{{ img.caption|default:'Bild' }}" loading="lazy">
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted text-center">Die Galerie wird gerade befüllt. Schau später wieder vorbei!</p>
+{% endif %}
+{% endblock %}

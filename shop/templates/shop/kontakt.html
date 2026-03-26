@@ -1,33 +1,37 @@
 {% extends "shop/base.html" %}
 {% block title %}Kontakt – Coffee Shop{% endblock %}
-{% block content %}
-<a class="btn btn-outline-secondary btn-sm mb-3" href="/">← Zurück</a>
-<h1 class="mb-4" style="color: var(--coffee-brown);">Kontakt</h1>
 
-<div class="row">
+{% block content %}
+<h1 class="mb-4">Kontakt</h1>
+<div class="row g-4">
     <div class="col-lg-6">
-        <div class="card shadow-sm">
+        <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">Adresse</h5>
                 <p class="card-text">
                     Coffee Shop GmbH<br>
                     Musterstraße 1<br>
-                    12345 Musterstadt
+                    12345 Musterstadt<br>
+                    Deutschland
                 </p>
                 <h5 class="card-title mt-4">Kontakt</h5>
                 <p class="card-text">
-                    Tel: +49 123 456789<br>
-                    E-Mail: <a href="mailto:info@coffeeshop.example">info@coffeeshop.example</a>
+                    <i class="bi bi-telephone me-2"></i>Tel: +49 123 456789<br>
+                    <i class="bi bi-envelope me-2"></i>E-Mail: <a href="mailto:info@coffeeshop.de">info@coffeeshop.de</a>
                 </p>
                 <h5 class="card-title mt-4">Öffnungszeiten</h5>
-                <p class="card-text">
-                    Mo–Fr: 07:00–19:00 Uhr<br>
-                    Sa: 08:00–18:00 Uhr<br>
-                    So: 09:00–17:00 Uhr
-                </p>
+                <ul class="list-unstyled mb-0">
+                    <li>Mo–Fr: 07:00 – 19:00 Uhr</li>
+                    <li>Sa: 08:00 – 18:00 Uhr</li>
+                    <li>So: 09:00 – 17:00 Uhr</li>
+                </ul>
             </div>
         </div>
     </div>
+    <div class="col-lg-6">
+        <div class="ratio ratio-16x9 rounded-3 shadow-sm">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.123456789!2d13.123456!3d52.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNjPCsDQ3JzU0LjQiTiAxM8KwNTQnMzQuNCJF!5e0!3m2!1sde!2sde!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
 </div>
-
 {% endblock %}

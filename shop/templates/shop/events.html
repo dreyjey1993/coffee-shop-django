@@ -1,0 +1,29 @@
+{% extends "shop/base.html" %}
+{% block title %}Events – Coffee Shop{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Kommende Events</h1>
+{% if events %}
+<div class="row g-4">
+    {% for event in events %}
+    <div class="col-md-6 reveal">
+        <div class="card h-100">
+            {% if event.image %}
+            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}" loading="lazy">
+            {% else %}
+            <img src="https://via.placeholder.com/600x300?text=Kein+Bild" class="card-img-top" alt="Kein Bild" loading="lazy">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="text-muted small mb-1"><i class="bi bi-calendar-event me-1"></i>{{ event.date|date:"d.m.Y H:i" }}</p>
+                <p class="text-muted small mb-2"><i class="bi bi-geo-alt me-1"></i>{{ event.location }}</p>
+                <p class="card-text">{{ event.description }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">Momentan stehen keine Events an. Schau später wieder vorbei!</p>
+{% endif %}
+{% endblock %}

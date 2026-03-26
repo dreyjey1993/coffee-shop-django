@@ -1,0 +1,220 @@
+/* Root-Variablen für Farben */
+:root {
+  --bg-light: #faf7f2;
+  --text-dark: #2d2a26;
+  --text-muted: #6c6a66;
+  --accent: #e2725b; /* Terrakotta */
+  --accent-hover: #d15c44;
+  --card-bg: #ffffff;
+  --header-height: 64px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --bg-light: #121210;
+  --text-dark: #e8e6e3;
+  --text-muted: #a8a5a2;
+  --accent: #ff9a8b;
+  --accent-hover: #e2725b;
+  --card-bg: #1c1a18;
+  --shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+body {
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(226, 114, 91, 0.92), rgba(141, 163, 153, 0.92)), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax */
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  margin-bottom: 2rem;
+  padding: 4rem 1rem;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  border-radius: 30px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  transform: scale(1.03);
+}
+.btn-outline-primary {
+  border-radius: 30px;
+  padding: 0.6rem 1.5rem;
+}
+
+/* Navigation */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: rgba(255,255,255,0.85) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: background 0.3s ease;
+}
+[data-theme="dark"] .navbar {
+  background: rgba(18,18,16,0.85) !important;
+}
+.nav-link {
+  position: relative;
+  font-weight: 500;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background: var(--accent);
+  transition: width 0.2s ease, left 0.2s ease;
+}
+.nav-link:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* Footer */
+footer {
+  background: var(--card-bg);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding: 3rem 0;
+  margin-top: 4rem;
+}
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent), #8da399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mobile Offcanvas */
+.offcanvas {
+  width: 280px;
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1080;
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1050;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+  transition: transform 0.2s ease;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+/* Lazy loading fade-in */
+img.lazy {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+img.lazy.loaded {
+  opacity: 1;
+}
+
+/* Lightbox (simple) */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 2rem;
+}
+.lightbox.active {
+  display: flex;
+}
+.lightbox img {
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Animations (Scroll Reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.active {
+  opacity: 1;
+  transform: none;
+}

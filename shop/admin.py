@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Event, Article, GalleryImage, Reservation
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -14,3 +14,51 @@ class ProductAdmin(admin.ModelAdmin):
         return "(kein Bild)"
     image_thumbnail.allow_tags = True
     image_thumbnail.short_description = "Bild"
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date', 'location', 'image_thumbnail')
+    search_fields = ('title', 'description', 'location')
+    list_filter = ('date',)
+    fields = ('title', 'description', 'date', 'location', 'image')
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return '<img src="{}" width="80" style="object-fit:cover;border-radius:4px;">'.format(obj.image.url)
+        return "(kein Bild)"
+    image_thumbnail.allow_tags = True
+    image_thumbnail.short_description = "Bild"
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'published_date', 'image_thumbnail')
+    search_fields = ('title', 'content')
+    prepopulated_fields = {'slug': ('title',)}
+    fields = ('title', 'slug', 'content', 'image', 'published_date')
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return '<img src="{}" width="80" style="object-fit:cover;border-radius:4px;">'.format(obj.image.url)
+        return "(kein Bild)"
+    image_thumbnail.allow_tags = True
+    image_thumbnail.short_description = "Bild"
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('caption', 'uploaded_at', 'image_thumbnail')
+    search_fields = ('caption',)
+    fields = ('caption', 'image')
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return '<img src="{}" width="80" style="object-fit:cover;border-radius:4px;">'.format(obj.image.url)
+        return "(kein Bild)"
+    image_thumbnail.allow_tags = True
+    image_thumbnail.short_description = "Bild"
+
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'date', 'time', 'guests', 'created_at')
+    search_fields = ('name', 'email')
+    list_filter = ('date', 'guests')
+    fields = ('name', 'email', 'date', 'time', 'guests')

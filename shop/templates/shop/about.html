@@ -1,0 +1,29 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}Über uns – Coffee Shop{% endblock %}
+
+{% block content %}
+<div class="row align-items-center mt-4 pt-2">
+    <div class="col-lg-6 reveal">
+        <h1 class="mb-4">Über den Coffee Shop</h1>
+        <p class="lead text-muted">Wir lieben Kaffee – und das seit 2010. Was als kleine Idee begann, ist heute ein lebendiger Ort, an dem Menschen zusammenkommen, gute Gespräche führen und natürlich exzellenten Kaffee genießen.</p>
+        <p>Unser Motto: Qualität vor Quantität. Wir beziehen unsere Bohnen von nachhaltigen Kleinbauern, rösten sie lokal und brauen jeden Becher mit Sorgfalt. Ob Filterkaffee, Espresso oder Spezialität – bei uns schmeckst du den Unterschied.</p>
+        <p>Atmosphäre ist alles. Mit viel Holz, warmem Licht und einer Prise Kreativität haben wir einen Ort geschaffen, an dem du gerne Zeit verbringst. Ob zum Arbeiten, Lesen oder einfach zum Chillen – unser Coffee Shop ist dein Zuhause unterwegs.</p>
+    </div>
+    <div class="col-lg-6 reveal">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded-3 shadow-sm" alt="Unser Laden">
+    </div>
+</div>
+
+<hr class="my-5">
+
+<h2 class="text-center mb-5">Das Team</h2>
+<div class="row g-4">
+    {% for member in team %}
+    <div class="col-md-4 text-center reveal">
+        <img src="{{ member.image }}" class="rounded-circle mb-3 shadow-sm" alt="{{ member.name }}" style="width: 150px; height: 150px; object-fit: cover;">
+        <h5>{{ member.name }}</h5>
+        <p class="text-muted small">{{ member.role }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

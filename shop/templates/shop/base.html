@@ -3,102 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coffee Shop – frisch gebrühter Kaffee, gemütliche Atmosphäre, Events, Galerie und mehr.">
     <title>{% block title %}Coffee Shop{% endblock %}</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --coffee-brown: #6f4e37;
-            --coffee-light: #a67c52;
-            --bg-light: #f8f9fa;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-light);
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .navbar {
-            background: var(--coffee-brown) !important;
-        }
-        .navbar-brand, .nav-link {
-            color: #fff !important;
-        }
-        .nav-link:hover {
-            color: rgba(255,255,255,0.85) !important;
-        }
-        .hero {
-            background: linear-gradient(rgba(111, 78, 55, 0.85), rgba(111, 78, 55, 0.85)), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            padding: 4rem 1rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            border-radius: 0 0 16px 16px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            flex: 1 0 auto;
-        }
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-        .price {
-            color: var(--coffee-brown);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            color: #888;
-            font-size: 0.9rem;
-            background: #e9ecef;
-            border-top: 1px solid #dee2e6;
-            margin-top: auto;
-        }
-        footer a {
-            color: var(--coffee-brown);
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link href="{% static 'shop/css/custom.css' %}" rel="stylesheet">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">☕ Coffee Shop</a>
+            <a class="navbar-brand fw-bold" href="/">☕ Coffee Shop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Start</a></li>
                     <li class="nav-item"><a class="nav-link" href="/menu/">Menü</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about/">Über uns</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/events/">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/gallery/">Galerie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/blog/">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="/kontakt/">Kontakt</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/reservation/">Reservierung</a></li>
                 </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <button id="themeToggle" class="btn btn-link text-secondary" aria-label="Theme wechseln">
+                        <i class="bi bi-moon-fill"></i>
+                    </button>
+                    <a class="btn btn-primary ms-2" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20etwas%20bestellen." target="_blank">
+                        <i class="bi bi-whatsapp me-1"></i> Bestellen
+                    </a>
+                    <a class="btn btn-outline-secondary" href="/admin/" title="Admin">
+                        <i class="bi bi-gear"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <!-- Hero Section (auf Home überschreibbar) -->
+    {% block hero %}{% endblock %}
 
-    <footer>
+    <main class="container mt-4 pt-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto">
         <div class="container">
-            &copy; {% now "Y" %} Coffee Shop GmbH — Made with <span style="color:#e25555;">&hearts;</span> and caffeine
+            <div class="row py-5">
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-gradient mb-3">Coffee Shop</h5>
+                    <address class="text-muted mb-0">
+                        Musterstraße 1<br>
+                        12345 Musterstadt<br>
+                        Deutschland
+                    </address>
+                    <p class="mt-2">
+                        <i class="bi bi-phone me-2"></i>+49 123 456789<br>
+                        <i class="bi bi-envelope me-2"></i><a href="mailto: info@coffeeshop.de">info@coffeeshop.de</a>
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">Öffnungszeiten</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li>Mo–Fr: 07:00 – 19:00 Uhr</li>
+                        <li>Sa: 08:00 – 18:00 Uhr</li>
+                        <li>So: 09:00 – 17:00 Uhr</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">Folge uns</h5>
+                    <div class="d-flex gap-3 fs-4">
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                    </div>
+                    <h5 class="mt-4 mb-3">Newsletter</h5>
+                    <form class="d-flex flex-column" onsubmit="event.preventDefault(); alert('Danke für die Anmeldung!');">
+                        <input type="email" class="form-control mb-2" placeholder="Deine E-Mail" required>
+                        <button class="btn btn-primary btn-sm" type="submit">Anmelden</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-top pt-3 text-center text-muted small">
+                &copy; {% now "Y" %} Coffee Shop GmbH. Alle Rechte vorbehalten.
+            </div>
         </div>
     </footer>
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+        <span class="lightbox-close" aria-label="Schließen">&times;</span>
+        <img src="" alt="Vergrößerte Ansicht">
+    </div>
+
+    <!-- WhatsApp Float -->
+    <a id="whatsapp-order" class="whatsapp-float" href="https://wa.me/49123456789?text=Hallo,%20ich%20m%C3%B6chte%20etwas%20bestellen." target="_blank" aria-label="Über WhatsApp bestellen">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'shop/js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
